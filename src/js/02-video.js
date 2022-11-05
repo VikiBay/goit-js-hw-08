@@ -23,7 +23,7 @@
 
     const onTimeUpdate = function(data){
         // localStorage.setItem("videoplayer-current-time",JSON.stringify(data.seconds))
-        save("videoplayer-current-time",JSON.stringify(data.seconds))
+        save("videoplayer-current-time", data.seconds)
     }
 
 

@@ -1,13 +1,37 @@
+    import {save, load,} from "./localStorage.js"
+
+    var throttle = require('lodash.throttle');
+
 const form = document.querySelector('.feedback-form')
 const {email, message} = form.elements;
-form.addEventListener("input", onFormInput)
-email.value = JSON.parse(localStorage.getItem("feedback-form-state")).email
-message.value = JSON.parse(localStorage.getItem("feedback-form-state")).message
 
-function onFormInput(){
-    console.dir(message)
-    const formInputObj ={email:email.value, message:message.value}
+const formInputObj = load("feedback-form-state") || {}
+
+email.value = formInputObj.email || "";
+message.value = formInputObj.message || "";
+
+
+form.addEventListener("input", throttle(onFormInput, 1000))
+form.addEventListener("submit", onFormSubmit)
+
+function onFormInput(evt){
+    // formInputObj[evt.target.name] = evt.target.value
+    formInputObj.email =email.value;
+    formInputObj.message = message.value;
+    // localStorage.save("feedback-form-state", formInputObj)
     localStorage.setItem("feedback-form-state", JSON.stringify(formInputObj))
-    // localStorage.setItem("feedback-form-state", formInputObj)
+    // localStorage.save("feedback-form-state", JSON.stringify(formInputObj))
+// console.log(formInputObj)
+}
+
+function onFormSubmit(evt){
+    if(!email.value || !message.value){
+        alert("Enter anything!!")
+    }
+evt.preventDefault();
 console.log(formInputObj)
+localStorage.clear()
+evt.currentTarget.reset()
+
+
 }
