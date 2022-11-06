@@ -18,15 +18,18 @@ function onFormInput(evt){
     // formInputObj[evt.target.name] = evt.target.value
     formInputObj.email =email.value;
     formInputObj.message = message.value;
-    // localStorage.save("feedback-form-state", formInputObj)
-    localStorage.setItem("feedback-form-state", JSON.stringify(formInputObj))
-    // localStorage.save("feedback-form-state", JSON.stringify(formInputObj))
+    save("feedback-form-state", formInputObj)
+    // localStorage.setItem("feedback-form-state", JSON.stringify(formInputObj))
+    
 // console.log(formInputObj)
 }
 
 function onFormSubmit(evt){
     if(!email.value || !message.value){
+   
         alert("Enter anything!!")
+       
+        return
     }
 evt.preventDefault();
 console.log(formInputObj)
